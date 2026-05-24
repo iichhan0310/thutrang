@@ -1,0 +1,1127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Trang Bui — Social & Influencer Marketing</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&family=Jost:wght@300;400;500&family=EB+Garamond:ital,wght@0,400;1,400&display=swap" rel="stylesheet"/>
+  <style>
+/* ── TOKENS ────────────────────────────────────────────────────────────── */
+:root {
+  --paper:   #FAF8F5;
+  --ivory:   #F3EFE8;
+  --blush:   #EAD9CC;
+  --nude:    #D4B8A8;
+  --rose:    #C4957A;
+  --mauve:   #9B7060;
+  --bark:    #4A2E22;
+  --ink:     #1A1410;
+  --ink50:   rgba(26,20,16,.5);
+  --ink20:   rgba(26,20,16,.2);
+
+  --display: 'Playfair Display', Georgia, serif;
+  --body:    'Jost', system-ui, sans-serif;
+  --editorial: 'EB Garamond', Georgia, serif;
+}
+
+/* ── RESET ─────────────────────────────────────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--body);
+  font-weight:300;
+  line-height:1.7;
+  overflow-x:hidden;
+  cursor:none;
+}
+::selection{background:var(--blush);color:var(--bark)}
+::-webkit-scrollbar{width:3px}
+::-webkit-scrollbar-track{background:var(--ivory)}
+::-webkit-scrollbar-thumb{background:var(--nude);border-radius:2px}
+
+/* ── CUSTOM CURSOR ─────────────────────────────────────────────────────── */
+#cursor{
+  position:fixed;z-index:9999;pointer-events:none;
+  width:8px;height:8px;
+  background:var(--rose);
+  border-radius:50%;
+  transform:translate(-50%,-50%);
+  transition:transform .15s ease, width .25s ease, height .25s ease, background .25s ease;
+}
+#cursor-ring{
+  position:fixed;z-index:9998;pointer-events:none;
+  width:36px;height:36px;
+  border:1px solid var(--rose);
+  border-radius:50%;
+  transform:translate(-50%,-50%);
+  transition:all .35s cubic-bezier(.23,1,.32,1);
+  opacity:.6;
+}
+body:has(a:hover) #cursor,
+body:has(button:hover) #cursor{width:14px;height:14px;background:var(--bark)}
+body:has(a:hover) #cursor-ring,
+body:has(button:hover) #cursor-ring{width:60px;height:60px;opacity:.2}
+
+/* ── GRAIN OVERLAY ─────────────────────────────────────────────────────── */
+body::before{
+  content:'';
+  position:fixed;inset:0;z-index:9000;
+  pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  background-size:200px 200px;
+  opacity:.028;
+  mix-blend-mode:multiply;
+}
+
+/* ── NAV ───────────────────────────────────────────────────────────────── */
+#nav{
+  position:fixed;top:0;left:0;right:0;z-index:500;
+  padding:28px clamp(2rem,5vw,5rem);
+  display:flex;align-items:center;justify-content:space-between;
+  transition:background .4s,padding .4s;
+}
+#nav.sticky{
+  background:rgba(250,248,245,.93);
+  backdrop-filter:blur(16px);
+  padding:18px clamp(2rem,5vw,5rem);
+  border-bottom:1px solid var(--ivory);
+}
+.nav-mark{
+  font-family:var(--display);
+  font-size:1.15rem;
+  font-weight:400;
+  letter-spacing:.03em;
+  color:var(--ink);
+}
+.nav-mark span{font-style:italic;color:var(--rose)}
+.nav-links{list-style:none;display:flex;gap:2.5rem}
+.nav-links a{
+  font-size:11px;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:var(--ink50);
+  transition:color .2s;
+  text-decoration:none;
+}
+.nav-links a:hover{color:var(--rose)}
+
+/* ── HERO ──────────────────────────────────────────────────────────────── */
+#hero{
+  min-height:100svh;
+  display:grid;
+  grid-template-rows:1fr auto;
+  padding:0 clamp(2rem,6vw,6rem);
+  padding-top:120px;
+  overflow:hidden;
+  position:relative;
+}
+
+/* large soft circle */
+.hero-orb{
+  position:absolute;
+  border-radius:50%;
+  pointer-events:none;
+}
+.hero-orb-1{
+  width:70vw;height:70vw;
+  right:-20vw;top:-20vw;
+  background:radial-gradient(circle at 40% 40%, #EAD9CC 0%, #F3EFE8 50%, transparent 75%);
+  opacity:.7;
+}
+.hero-orb-2{
+  width:40vw;height:40vw;
+  left:-10vw;bottom:10vh;
+  background:radial-gradient(circle, #D4B8A8 0%, transparent 70%);
+  opacity:.3;
+}
+
+.hero-inner{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  max-width:1200px;
+  margin:0 auto;
+  width:100%;
+  position:relative;z-index:1;
+}
+
+.hero-eyebrow{
+  font-size:11px;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  color:var(--rose);
+  margin-bottom:2rem;
+  opacity:0;
+  animation:riseIn .8s .2s forwards;
+}
+
+.hero-headline{
+  font-family:var(--display);
+  font-weight:400;
+  font-size:clamp(4.5rem,11vw,11rem);
+  line-height:.92;
+  letter-spacing:-.02em;
+  color:var(--ink);
+  overflow:hidden;
+}
+.hero-headline .line{
+  display:block;
+  opacity:0;
+  transform:translateY(100%);
+}
+.hero-headline .line:nth-child(1){animation:slideUp .9s .3s cubic-bezier(.16,1,.3,1) forwards}
+.hero-headline .line:nth-child(2){animation:slideUp .9s .45s cubic-bezier(.16,1,.3,1) forwards}
+.hero-headline .line:nth-child(2){color:var(--rose);font-style:italic}
+.hero-headline .line:nth-child(3){animation:slideUp .9s .58s cubic-bezier(.16,1,.3,1) forwards}
+
+.hero-sub{
+  margin-top:2.5rem;
+  display:flex;
+  align-items:flex-start;
+  gap:3rem;
+  opacity:0;
+  animation:riseIn .8s .75s forwards;
+}
+.hero-desc{
+  max-width:380px;
+  font-size:clamp(.9rem,1.2vw,1.05rem);
+  color:var(--ink50);
+  line-height:1.75;
+}
+.hero-aside{
+  display:flex;
+  flex-direction:column;
+  gap:.8rem;
+}
+.hero-aside a{
+  font-size:11px;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:var(--ink50);
+  text-decoration:none;
+  transition:color .2s;
+}
+.hero-aside a:hover{color:var(--rose)}
+
+.hero-stats-bar{
+  display:flex;
+  gap:0;
+  border-top:1px solid var(--ivory);
+  margin-top:clamp(3rem,6vh,5rem);
+  padding-top:0;
+  opacity:0;
+  animation:riseIn .8s .9s forwards;
+  align-self:flex-end;
+  max-width:1200px;
+  width:100%;
+  margin-inline:auto;
+  position:relative;z-index:1;
+  padding-bottom:3rem;
+}
+.stat-col{
+  flex:1;
+  padding:2rem 2rem 0;
+  border-right:1px solid var(--ivory);
+  position:relative;
+}
+.stat-col:last-child{border-right:none}
+.stat-num{
+  font-family:var(--display);
+  font-size:clamp(2rem,3.5vw,3rem);
+  font-weight:400;
+  color:var(--ink);
+  line-height:1;
+}
+.stat-label{
+  font-size:10px;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:var(--ink50);
+  margin-top:.5rem;
+}
+
+/* ── SECTION WRAPPER ───────────────────────────────────────────────────── */
+.wrap{
+  max-width:1200px;
+  margin-inline:auto;
+  padding:0 clamp(2rem,5vw,5rem);
+}
+section{padding:clamp(5rem,10vw,9rem) 0}
+
+.eyebrow{
+  font-size:10px;
+  letter-spacing:.22em;
+  text-transform:uppercase;
+  color:var(--rose);
+  margin-bottom:1.5rem;
+  display:block;
+}
+.section-title{
+  font-family:var(--display);
+  font-size:clamp(2.4rem,4.5vw,4rem);
+  font-weight:400;
+  line-height:1.1;
+  letter-spacing:-.015em;
+}
+.section-title em{font-style:italic;color:var(--rose)}
+
+/* ── REVEAL ────────────────────────────────────────────────────────────── */
+.r{opacity:0;transform:translateY(28px);transition:opacity .75s ease,transform .75s ease}
+.r.on{opacity:1;transform:none}
+.r.d1{transition-delay:.1s}
+.r.d2{transition-delay:.2s}
+.r.d3{transition-delay:.3s}
+.r.d4{transition-delay:.4s}
+
+/* ── ABOUT ─────────────────────────────────────────────────────────────── */
+#about{background:var(--paper)}
+.about-layout{
+  display:grid;
+  grid-template-columns:5fr 4fr;
+  gap:clamp(3rem,7vw,7rem);
+  align-items:start;
+  margin-top:4rem;
+}
+.about-pull{
+  font-family:var(--editorial);
+  font-size:clamp(1.5rem,2.5vw,2.1rem);
+  line-height:1.5;
+  color:var(--ink);
+  margin-bottom:2rem;
+}
+.about-pull em{font-style:italic;color:var(--rose)}
+.about-body p{
+  font-size:.95rem;
+  color:var(--ink50);
+  margin-bottom:1rem;
+  line-height:1.8;
+}
+.award-strip{
+  margin-top:2.5rem;
+  padding:1.5rem;
+  background:linear-gradient(135deg,var(--ivory),var(--blush));
+  border-radius:4px;
+  display:flex;
+  align-items:center;
+  gap:1.2rem;
+}
+.award-icon{font-size:1.5rem;line-height:1}
+.award-label-sm{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--mauve)}
+.award-title{font-family:var(--display);font-size:1.1rem;font-weight:400;margin-top:.2rem}
+.award-sub{font-size:.82rem;color:var(--ink50);margin-top:.15rem}
+
+.about-right{}
+.module{margin-bottom:2.5rem}
+.module-title{
+  font-size:10px;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  color:var(--nude);
+  margin-bottom:1rem;
+  padding-bottom:.6rem;
+  border-bottom:1px solid var(--ivory);
+}
+.pill-wrap{display:flex;flex-wrap:wrap;gap:.45rem}
+.pill{
+  font-size:12px;
+  padding:6px 14px;
+  border-radius:100px;
+  border:1px solid var(--ivory);
+  color:var(--ink50);
+  background:transparent;
+  transition:all .22s;
+  cursor:default;
+}
+.pill:hover,.pill.on{background:var(--rose);color:#fff;border-color:var(--rose)}
+.info-rows{display:flex;flex-direction:column;gap:.8rem}
+.info-row{
+  display:flex;align-items:center;gap:.9rem;
+  font-size:.88rem;color:var(--ink50);
+}
+.info-icon{
+  width:30px;height:30px;border-radius:50%;
+  background:var(--ivory);
+  display:grid;place-items:center;
+  font-size:13px;flex-shrink:0;
+}
+.info-row a{color:var(--rose);text-decoration:none}
+.info-row a:hover{text-decoration:underline}
+
+/* ── EXPERIENCE ────────────────────────────────────────────────────────── */
+#experience{background:var(--ivory)}
+.exp-main{
+  margin-top:4rem;
+  background:var(--paper);
+  border-radius:6px;
+  overflow:hidden;
+}
+.exp-band{
+  background:var(--bark);
+  color:#fff;
+  padding:2.5rem 3rem;
+  display:flex;justify-content:space-between;align-items:flex-start;
+  gap:2rem;
+}
+.exp-role-name{
+  font-family:var(--display);
+  font-size:clamp(1.5rem,2.5vw,2rem);
+  font-weight:400;
+}
+.exp-role-co{color:var(--blush);font-size:.9rem;margin-top:.3rem;letter-spacing:.05em}
+.exp-period-badge{
+  font-size:11px;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  background:rgba(255,255,255,.1);
+  border:1px solid rgba(255,255,255,.15);
+  padding:8px 16px;border-radius:100px;
+  white-space:nowrap;color:var(--blush);
+}
+.exp-body{padding:2.5rem 3rem}
+.exp-para{
+  font-size:.95rem;color:var(--ink50);line-height:1.85;
+  max-width:680px;margin-bottom:2rem;
+}
+.exp-chips{display:flex;flex-wrap:wrap;gap:.5rem}
+.chip{
+  font-size:11px;padding:5px 13px;
+  border-radius:3px;
+  background:var(--ivory);
+  color:var(--mauve);
+  letter-spacing:.05em;
+}
+
+.exp-prev{
+  margin-top:3rem;
+  display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;
+}
+.prev-card{
+  background:var(--paper);
+  border:1px solid var(--ivory);
+  border-radius:4px;
+  padding:1.8rem;
+}
+.prev-role{font-weight:500;font-size:.95rem}
+.prev-co{font-size:.82rem;color:var(--rose);margin:.2rem 0}
+.prev-period{font-size:.78rem;color:var(--nude);margin-bottom:.8rem}
+.prev-desc{font-size:.85rem;color:var(--ink50);line-height:1.7}
+
+/* ── WORK ──────────────────────────────────────────────────────────────── */
+#work{background:var(--paper)}
+.work-intro{
+  display:grid;grid-template-columns:1fr 1fr;gap:4rem;
+  align-items:end;margin-top:2rem;margin-bottom:4rem;
+}
+.work-lede{
+  font-family:var(--editorial);
+  font-size:clamp(1.1rem,1.8vw,1.4rem);
+  color:var(--ink50);line-height:1.7;
+}
+.work-counter{
+  text-align:right;
+  font-family:var(--display);
+  font-size:clamp(4rem,8vw,7rem);
+  font-weight:400;
+  line-height:1;
+  color:var(--ivory);
+}
+
+/* featured project — full bleed editorial */
+.feat{
+  position:relative;
+  background:var(--bark);
+  border-radius:6px;
+  overflow:hidden;
+  padding:clamp(2.5rem,5vw,4.5rem);
+  margin-bottom:1.5rem;
+  color:#fff;
+}
+.feat-bg-text{
+  position:absolute;
+  top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  font-family:var(--display);
+  font-size:clamp(8rem,20vw,18rem);
+  font-weight:400;
+  font-style:italic;
+  white-space:nowrap;
+  color:rgba(255,255,255,.04);
+  pointer-events:none;
+  user-select:none;
+  letter-spacing:-.03em;
+}
+.feat-top{display:flex;justify-content:space-between;align-items:flex-start;gap:2rem;margin-bottom:2.5rem}
+.feat-client{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--nude)}
+.feat-badge{
+  font-size:10px;letter-spacing:.15em;text-transform:uppercase;
+  border:1px solid rgba(255,255,255,.2);padding:5px 12px;border-radius:100px;
+  color:rgba(255,255,255,.5);
+}
+.feat-title{
+  font-family:var(--display);
+  font-size:clamp(2rem,4vw,3.5rem);
+  font-weight:400;
+  line-height:1.1;
+  letter-spacing:-.01em;
+  margin-bottom:1.5rem;
+  max-width:640px;
+}
+.feat-desc{
+  font-size:.95rem;color:rgba(255,255,255,.55);
+  line-height:1.85;max-width:600px;margin-bottom:2.5rem;
+}
+.feat-metrics{
+  display:flex;gap:3rem;
+  padding-top:2rem;
+  border-top:1px solid rgba(255,255,255,.08);
+  flex-wrap:wrap;
+}
+.feat-m-val{
+  font-family:var(--display);font-size:2.2rem;font-weight:400;
+  color:var(--blush);line-height:1;
+}
+.feat-m-key{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-top:.4rem}
+.feat-platforms{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:2rem}
+.plat{
+  font-size:10px;padding:4px 12px;border-radius:100px;
+  background:rgba(255,255,255,.07);color:rgba(255,255,255,.45);
+  letter-spacing:.08em;
+}
+
+/* project grid */
+.proj-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:1.5rem;
+}
+@media(max-width:900px){.proj-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.proj-grid{grid-template-columns:1fr}}
+.pc{
+  background:var(--ivory);
+  border-radius:4px;
+  padding:1.8rem;
+  display:flex;flex-direction:column;gap:.9rem;
+  transition:transform .3s cubic-bezier(.23,1,.32,1),box-shadow .3s;
+  cursor:default;
+}
+.pc:hover{transform:translateY(-5px);box-shadow:0 12px 36px rgba(26,20,16,.08)}
+.pc-client{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--rose)}
+.pc-name{
+  font-family:var(--display);font-size:1.15rem;font-weight:400;
+  line-height:1.25;color:var(--ink);
+}
+.pc-desc{font-size:.84rem;color:var(--ink50);line-height:1.75;flex:1}
+.pc-metrics{
+  display:flex;gap:1.5rem;
+  padding-top:.9rem;border-top:1px solid var(--blush);
+}
+.pc-m-val{
+  font-family:var(--display);font-size:1.3rem;font-weight:400;
+  color:var(--rose);line-height:1;
+}
+.pc-m-key{font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--nude);margin-top:.2rem}
+.pc-plats{display:flex;gap:.35rem;flex-wrap:wrap;margin-top:.2rem}
+.pc-plat{
+  font-size:9px;padding:3px 9px;border-radius:100px;
+  background:var(--blush);color:var(--mauve);
+  letter-spacing:.06em;
+}
+
+/* ── CLIENTS ───────────────────────────────────────────────────────────── */
+#clients{background:var(--ivory);overflow:hidden}
+.clients-heading{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:4rem;align-items:end;
+  margin-bottom:4rem;
+}
+.clients-note{
+  font-size:.9rem;color:var(--ink50);line-height:1.8;
+  max-width:380px;align-self:end;
+}
+.marquee-wrap{position:relative;overflow:hidden}
+.marquee-wrap::before,.marquee-wrap::after{
+  content:'';position:absolute;top:0;bottom:0;z-index:2;width:80px;
+  pointer-events:none;
+}
+.marquee-wrap::before{left:0;background:linear-gradient(to right,var(--ivory),transparent)}
+.marquee-wrap::after{right:0;background:linear-gradient(to left,var(--ivory),transparent)}
+.marquee-track{
+  display:flex;gap:1rem;
+  animation:marquee 28s linear infinite;
+  width:max-content;
+}
+.marquee-track:hover{animation-play-state:paused}
+.client-tile{
+  flex-shrink:0;
+  background:var(--paper);
+  border:1px solid var(--blush);
+  border-radius:3px;
+  padding:16px 32px;
+  font-family:var(--display);
+  font-size:1.05rem;
+  font-weight:400;
+  color:var(--ink50);
+  white-space:nowrap;
+  transition:all .25s;
+}
+.client-tile:hover{background:var(--rose);color:#fff;border-color:var(--rose)}
+
+@keyframes marquee{
+  from{transform:translateX(0)}
+  to{transform:translateX(-50%)}
+}
+
+/* ── EDUCATION ─────────────────────────────────────────────────────────── */
+#education{background:var(--paper)}
+.edu-layout{
+  display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;
+  margin-top:4rem;
+}
+.edu-card{
+  padding:2.5rem;border-radius:4px;
+  border:1px solid var(--ivory);
+}
+.edu-card.dark{background:var(--bark);border-color:transparent;color:#fff}
+.edu-degree{
+  font-family:var(--display);font-size:1.5rem;font-weight:400;
+  margin-bottom:.4rem;
+}
+.edu-card.dark .edu-degree{color:#fff}
+.edu-school{font-size:.88rem;color:var(--rose);font-weight:500;margin-bottom:.2rem}
+.edu-card.dark .edu-school{color:var(--blush)}
+.edu-year{font-size:.78rem;color:var(--ink50);margin-bottom:1rem}
+.edu-card.dark .edu-year{color:rgba(255,255,255,.35)}
+.edu-desc{font-size:.88rem;color:var(--ink50);line-height:1.75}
+.edu-card.dark .edu-desc{color:rgba(255,255,255,.5)}
+
+/* ── CONTACT ───────────────────────────────────────────────────────────── */
+#contact{
+  background:var(--paper);
+  text-align:center;
+  padding:clamp(5rem,12vh,10rem) 0;
+}
+.contact-super{
+  font-family:var(--display);
+  font-size:clamp(3.5rem,9vw,8rem);
+  font-weight:400;
+  line-height:.95;
+  letter-spacing:-.02em;
+  margin-bottom:2rem;
+}
+.contact-super em{font-style:italic;color:var(--rose)}
+.contact-sub{
+  font-size:clamp(.95rem,1.5vw,1.1rem);
+  color:var(--ink50);
+  max-width:480px;margin-inline:auto;
+  line-height:1.8;margin-bottom:3rem;
+}
+.cta-row{
+  display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;
+  margin-bottom:3.5rem;
+}
+.btn{
+  font-family:var(--body);
+  font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+  font-weight:500;padding:14px 32px;border-radius:100px;
+  text-decoration:none;
+  transition:all .25s;display:inline-block;
+  cursor:none;
+}
+.btn-fill{background:var(--rose);color:#fff;border:1.5px solid var(--rose)}
+.btn-fill:hover{background:var(--mauve);border-color:var(--mauve)}
+.btn-ghost{background:transparent;color:var(--ink);border:1.5px solid var(--ink20)}
+.btn-ghost:hover{border-color:var(--rose);color:var(--rose)}
+.contact-info-row{
+  display:flex;gap:3rem;justify-content:center;flex-wrap:wrap;
+}
+.ci{font-size:.88rem;color:var(--ink50)}
+.ci a{color:var(--rose);text-decoration:none}
+.ci a:hover{text-decoration:underline}
+
+/* ── FOOTER ────────────────────────────────────────────────────────────── */
+footer{
+  border-top:1px solid var(--ivory);
+  padding:2rem clamp(2rem,5vw,5rem);
+  display:flex;justify-content:space-between;align-items:center;
+  flex-wrap:wrap;gap:1rem;
+}
+footer p{font-size:.78rem;color:var(--nude);letter-spacing:.06em}
+footer a{color:var(--rose);text-decoration:none}
+
+/* ── RESPONSIVE ────────────────────────────────────────────────────────── */
+@media(max-width:900px){
+  .about-layout,.work-intro,.clients-heading,.edu-layout{grid-template-columns:1fr}
+  .work-counter,.clients-note:last-child{text-align:left}
+  .exp-prev{grid-template-columns:1fr}
+  .nav-links{display:none}
+  .hero-sub{flex-direction:column;gap:1.5rem}
+  .hero-stats-bar{flex-wrap:wrap}
+  .stat-col{flex:1 0 45%;border-right:none;padding:1.5rem 0;border-top:1px solid var(--ivory)}
+  #cursor,#cursor-ring{display:none}
+  body{cursor:auto}
+}
+
+/* ── KEYFRAMES ─────────────────────────────────────────────────────────── */
+@keyframes slideUp{
+  from{opacity:0;transform:translateY(100%)}
+  to{opacity:1;transform:translateY(0)}
+}
+@keyframes riseIn{
+  from{opacity:0;transform:translateY(16px)}
+  to{opacity:1;transform:translateY(0)}
+}
+  </style>
+</head>
+<body>
+
+<!-- Custom Cursor -->
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+
+<!-- NAV -->
+<nav id="nav">
+  <span class="nav-mark">Trang <span>Bui</span></span>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#work">Work</a></li>
+    <li><a href="#clients">Clients</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- ═══ HERO ══════════════════════════════════════════════════════════════ -->
+<section id="hero">
+  <div class="hero-orb hero-orb-1"></div>
+  <div class="hero-orb hero-orb-2"></div>
+
+  <div class="hero-inner">
+    <p class="hero-eyebrow">Social &amp; Influencer Marketing — Ho Chi Minh City</p>
+    <h1 class="hero-headline">
+      <span class="line">Bui Thu</span>
+      <span class="line">Trang</span>
+      <span class="line" style="color:var(--ink);font-style:normal;font-size:.45em;letter-spacing:-.01em;margin-top:.6rem">Client Executive · Edelman Vietnam</span>
+    </h1>
+    <div class="hero-sub">
+      <p class="hero-desc">4+ years crafting influencer campaigns, community movements, and social content for global brands — from brief to execution to results.</p>
+      <div class="hero-aside">
+        <a href="mailto:tbui16077@gmail.com">tbui16077@gmail.com</a>
+        <a href="https://linkedin.com/in/trang-bui-thu0310" target="_blank">LinkedIn ↗</a>
+        <a href="#work">View Work ↓</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-stats-bar">
+    <div class="stat-col">
+      <div class="stat-num">15M+</div>
+      <div class="stat-label">Total Views</div>
+    </div>
+    <div class="stat-col">
+      <div class="stat-num">500K+</div>
+      <div class="stat-label">Engagements</div>
+    </div>
+    <div class="stat-col">
+      <div class="stat-num">100+</div>
+      <div class="stat-label">Influencers Managed</div>
+    </div>
+    <div class="stat-col">
+      <div class="stat-num">13+</div>
+      <div class="stat-label">Brand Clients</div>
+    </div>
+    <div class="stat-col">
+      <div class="stat-num">6+</div>
+      <div class="stat-label">Years in Marketing</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ ABOUT ══════════════════════════════════════════════════════════════ -->
+<section id="about">
+  <div class="wrap">
+    <span class="eyebrow r">01 — About</span>
+    <h2 class="section-title r d1">The person <em>behind<br>the campaign</em></h2>
+
+    <div class="about-layout">
+      <div class="r d1">
+        <p class="about-pull">I turn brand briefs into <em>real social movements</em> — through the right voices, the right content, and end-to-end execution that actually delivers.</p>
+        <div class="about-body">
+          <p>Marketing graduate from UEH (2023), I spent nearly 4 years at Edelman Vietnam as a Client Executive — immersed in social media, influencer marketing, community management, PR, and content strategy across FMCG, beauty, tech, F&B, and travel.</p>
+          <p>My core strength is influencer campaign execution from strategy to results: talent selection across Macro / Micro / Nano tiers, content briefing and script direction, vendor and budget management, and performance reporting via Meta Business Suite and TikTok Analytics.</p>
+          <p>Beyond influencer work, I've handled always-on fanpage content, WOM community management, press release localisation, and event execution — making me genuinely comfortable with both the planning table and the messy realities of delivery.</p>
+        </div>
+        <div class="award-strip r d2">
+          <div class="award-icon">🏆</div>
+          <div>
+            <div class="award-label-sm">Recognition</div>
+            <div class="award-title">FY25 H1 Q Award — Employee of the Quarter</div>
+            <div class="award-sub">Edelman Vietnam · 2025</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="r d2">
+        <div class="module">
+          <div class="module-title">Core Expertise</div>
+          <div class="pill-wrap">
+            <span class="pill on">Influencer Marketing</span>
+            <span class="pill on">End-to-End Execution</span>
+            <span class="pill on">Content Strategy</span>
+            <span class="pill">Comms Planning</span>
+            <span class="pill">Social Media Management</span>
+            <span class="pill">Content Briefing & Script Direction</span>
+            <span class="pill">Budget & Vendor Management</span>
+            <span class="pill">Community Management</span>
+            <span class="pill">PR Execution</span>
+            <span class="pill">Event Management</span>
+          </div>
+        </div>
+        <div class="module">
+          <div class="module-title">Platforms</div>
+          <div class="pill-wrap">
+            <span class="pill">TikTok</span>
+            <span class="pill">Facebook</span>
+            <span class="pill">Instagram</span>
+            <span class="pill">YouTube</span>
+          </div>
+        </div>
+        <div class="module">
+          <div class="module-title">Tools</div>
+          <div class="pill-wrap">
+            <span class="pill">Meta Business Suite</span>
+            <span class="pill">TikTok Analytics</span>
+            <span class="pill">Social Listening</span>
+          </div>
+        </div>
+        <div class="module">
+          <div class="module-title">Languages</div>
+          <div class="pill-wrap">
+            <span class="pill on">Vietnamese — Native</span>
+            <span class="pill on">English — Fluent</span>
+          </div>
+        </div>
+        <div class="module">
+          <div class="module-title">Contact</div>
+          <div class="info-rows">
+            <div class="info-row"><span class="info-icon">📞</span>(+84) 38 637 6479</div>
+            <div class="info-row"><span class="info-icon">✉️</span><a href="mailto:tbui16077@gmail.com">tbui16077@gmail.com</a></div>
+            <div class="info-row"><span class="info-icon">🔗</span><a href="https://linkedin.com/in/trang-bui-thu0310" target="_blank">linkedin.com/in/trang-bui-thu0310</a></div>
+            <div class="info-row"><span class="info-icon">📍</span>Ho Chi Minh City, Vietnam</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ EXPERIENCE ═════════════════════════════════════════════════════════ -->
+<section id="experience">
+  <div class="wrap">
+    <span class="eyebrow r">02 — Experience</span>
+    <h2 class="section-title r d1">Where the work<br><em>got done</em></h2>
+
+    <div class="exp-main r d2" style="margin-top:4rem">
+      <div class="exp-band">
+        <div>
+          <div class="exp-role-name">Client Executive</div>
+          <div class="exp-role-co">Edelman Vietnam — PR & Communications Agency</div>
+        </div>
+        <div class="exp-period-badge">June 2022 – May 2026 · ~4 Years</div>
+      </div>
+      <div class="exp-body">
+        <p class="exp-para">Day-to-day client contact across a diverse portfolio of regional and global brands. Spearheaded influencer marketing programmes from briefing and talent selection to content approval and performance analysis. Managed multi-platform campaigns on Facebook, TikTok, Instagram, and YouTube — overseeing budgets between 75M and 400M VND per project. Wrote content briefs and script directions for influencers, managed vendor relationships, coordinated media and press bookings, executed events, and delivered monthly performance reporting.</p>
+        <div class="exp-chips">
+          <span class="chip">Influencer Marketing</span>
+          <span class="chip">Social Media</span>
+          <span class="chip">Content Strategy</span>
+          <span class="chip">PR Execution</span>
+          <span class="chip">Event Management</span>
+          <span class="chip">Budget Management</span>
+          <span class="chip">Vendor Management</span>
+          <span class="chip">Performance Reporting</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="exp-prev r d3">
+      <div class="prev-card">
+        <div class="prev-role">Marketing & Public Relations</div>
+        <div class="prev-co">Local Vietnamese Fashion Brand (In-house)</div>
+        <div class="prev-period">Pre-2022</div>
+        <div class="prev-desc">Managed social media channels, handled artist sponsorships and KOL partnerships. Oversaw brand's online presence and community engagement.</div>
+      </div>
+      <div class="prev-card">
+        <div class="prev-role">Freelance Content Writer</div>
+        <div class="prev-co">SEO & Digital</div>
+        <div class="prev-period">Pre-2022</div>
+        <div class="prev-desc">Produced SEO-optimised website content for various brands — developing strong editorial instincts and platform-native writing skills.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ WORK ═══════════════════════════════════════════════════════════════ -->
+<section id="work">
+  <div class="wrap">
+    <span class="eyebrow r">03 — Selected Projects</span>
+
+    <div class="work-intro r d1">
+      <h2 class="section-title">Campaigns that<br><em>moved the needle</em></h2>
+      <div>
+        <p class="work-lede">From luxury diaper brands to beauty launches — here's a selection of the work I'm most proud of.</p>
+        <div class="work-counter">12</div>
+      </div>
+    </div>
+
+    <!-- FEATURED -->
+    <div class="feat r">
+      <div class="feat-bg-text">Huggies</div>
+      <div class="feat-top">
+        <span class="feat-client">Kimberly-Clark — Huggies</span>
+        <span class="feat-badge">★ Featured · 3-Year Programme</span>
+      </div>
+      <h3 class="feat-title">Social Advocacy Programme<br>2023 – 2026</h3>
+      <p class="feat-desc">Three years of ongoing influencer strategy and execution for Huggies' premium diaper range in Vietnam. Planned and executed 6 campaigns across Macro, Micro, and Nano tiers — aligned with AWO cycles and new product launches. Developed seasonal influencer strategies, wrote content briefs, and managed end-to-end KOC partnerships including TikTok Live activations. The programme prioritised brand credibility and premium image over pure volume — successfully cementing Huggies' positioning in the high-end segment.</p>
+      <div class="feat-metrics">
+        <div><div class="feat-m-val">15M</div><div class="feat-m-key">Total Views</div></div>
+        <div><div class="feat-m-val">500K</div><div class="feat-m-key">Engagements</div></div>
+        <div><div class="feat-m-val">100+</div><div class="feat-m-key">Influencers & KOCs</div></div>
+        <div><div class="feat-m-val">6</div><div class="feat-m-key">Campaigns Run</div></div>
+        <div><div class="feat-m-val">300–400M</div><div class="feat-m-key">VND Budget / Project</div></div>
+      </div>
+      <div class="feat-platforms">
+        <span class="plat">Instagram</span>
+        <span class="plat">TikTok</span>
+        <span class="plat">Facebook</span>
+        <span class="plat">TikTok Live / KOC</span>
+      </div>
+    </div>
+
+    <!-- GRID -->
+    <div class="proj-grid">
+
+      <div class="pc r d1">
+        <div class="pc-client">Similac / Abbott</div>
+        <div class="pc-name">Hot Moms WOM Community</div>
+        <p class="pc-desc">Managed 40–50 "Hot Moms" as social advocates. Oversaw 100+ organic Facebook posts per month for 6 months — achieving #1 Buzz ranking in social listening every month.</p>
+        <div class="pc-metrics">
+          <div><div class="pc-m-val">40–50</div><div class="pc-m-key">Hot Moms</div></div>
+          <div><div class="pc-m-val">#1</div><div class="pc-m-key">Monthly Buzz</div></div>
+        </div>
+        <div class="pc-plats"><span class="pc-plat">Facebook</span><span class="pc-plat">WOM</span></div>
+      </div>
+
+      <div class="pc r d2">
+        <div class="pc-client">KAO — Bioré</div>
+        <div class="pc-name">Beauty Influencer Campaigns</div>
+        <p class="pc-desc">Led 2 TikTok-focused influencer campaigns for Bioré. Developed influencer strategy and content direction for awareness objectives with 20+ KOCs.</p>
+        <div class="pc-metrics">
+          <div><div class="pc-m-val">3M</div><div class="pc-m-key">Views</div></div>
+          <div><div class="pc-m-val">100K</div><div class="pc-m-key">Engagements</div></div>
+        </div>
+        <div class="pc-plats"><span class="pc-plat">TikTok</span></div>
+      </div>
+
+      <div class="pc r d3">
+        <div class="pc-client">HP</div>
+        <div class="pc-name">AWO Tech Review Influencers</div>
+        <p class="pc-desc">Built influencer criteria and content briefs for HP's always-on programme — managing a diverse mix of business owners, creatives, pro-gamers, and lifestyle celebs across 4 platforms.</p>
+        <div class="pc-plats"><span class="pc-plat">Facebook</span><span class="pc-plat">TikTok</span><span class="pc-plat">YouTube</span><span class="pc-plat">Instagram</span></div>
+      </div>
+
+      <div class="pc r d1">
+        <div class="pc-client">Nestlé</div>
+        <div class="pc-name">Tết Social Advocacy 2023–24</div>
+        <p class="pc-desc">Executed social media and influencer elements for Nestlé's Tết seasonal campaigns across two consecutive years — managing creators and community activations.</p>
+        <div class="pc-plats"><span class="pc-plat">Facebook</span><span class="pc-plat">Instagram</span><span class="pc-plat">TikTok</span></div>
+      </div>
+
+      <div class="pc r d2">
+        <div class="pc-client">Nestlé — Milo</div>
+        <div class="pc-name">Grit / ChampMove / Apollo</div>
+        <p class="pc-desc">Produced community-focused content for three Milo campaigns targeting youth audiences — supporting brand activations with strong social engagement.</p>
+        <div class="pc-plats"><span class="pc-plat">Social Media</span></div>
+      </div>
+
+      <div class="pc r d3">
+        <div class="pc-client">Shell</div>
+        <div class="pc-name">Ducati Partnership & Race Never Ends</div>
+        <p class="pc-desc">Localised Shell's global Ducati press release for Vietnam, pitched and booked earned media. Produced sports KOL campaign content for Race Never Ends.</p>
+        <div class="pc-plats"><span class="pc-plat">PR</span><span class="pc-plat">Sports KOLs</span><span class="pc-plat">Media</span></div>
+      </div>
+
+      <div class="pc r d1">
+        <div class="pc-client">Singapore Tourism Board</div>
+        <div class="pc-name">Influencer Product Update Events</div>
+        <p class="pc-desc">End-to-end event execution for STB's influencer relationship activations — planning, logistics, gifting, and on-site management to keep travel media engaged.</p>
+        <div class="pc-plats"><span class="pc-plat">Event</span><span class="pc-plat">Influencer Relations</span></div>
+      </div>
+
+      <div class="pc r d2">
+        <div class="pc-client">Booking.com</div>
+        <div class="pc-name">Annual Travel Report Launch Events</div>
+        <p class="pc-desc">Planned and executed annual media launch events for Booking.com's travel insight reports — intimate to medium-scale activations for journalists and influencers.</p>
+        <div class="pc-plats"><span class="pc-plat">Event</span><span class="pc-plat">Media</span></div>
+      </div>
+
+      <div class="pc r d3">
+        <div class="pc-client">SABECO</div>
+        <div class="pc-name">CSR Tết Campaign 2026</div>
+        <p class="pc-desc">Managed fanpage content strategy for SABECO's CSR Tết initiative — publishing milestone updates and handling community and influencer advocacy components.</p>
+        <div class="pc-plats"><span class="pc-plat">Facebook</span><span class="pc-plat">Influencer</span></div>
+      </div>
+
+      <div class="pc r d1">
+        <div class="pc-client">Centrum</div>
+        <div class="pc-name">New Product Launch — Comms Planning 2026</div>
+        <p class="pc-desc">Developed integrated comms strategy for Centrum's new product launch spanning a media roundtable, influencer seeding, and PR media booking.</p>
+        <div class="pc-plats"><span class="pc-plat">Comms Planning</span><span class="pc-plat">Influencer</span><span class="pc-plat">PR</span></div>
+      </div>
+
+      <div class="pc r d2">
+        <div class="pc-client">Prudential</div>
+        <div class="pc-name">IMC Fanpage Content</div>
+        <p class="pc-desc">Developed and produced fanpage content for Prudential's IMC campaigns — content direction and post copy aligned to brand tone and campaign objectives.</p>
+        <div class="pc-plats"><span class="pc-plat">Facebook</span><span class="pc-plat">Content</span></div>
+      </div>
+
+      <div class="pc r d3">
+        <div class="pc-client">Envy</div>
+        <div class="pc-name">AWO Fanpage Content</div>
+        <p class="pc-desc">Always-on social media content production for Envy's brand fanpage — maintaining consistent voice, aesthetic, and engagement across posts.</p>
+        <div class="pc-plats"><span class="pc-plat">Facebook</span><span class="pc-plat">Content</span></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CLIENTS ════════════════════════════════════════════════════════════ -->
+<section id="clients">
+  <div class="wrap">
+    <div class="clients-heading r">
+      <div>
+        <span class="eyebrow">04 — Clients</span>
+        <h2 class="section-title">Brands I've<br><em>worked with</em></h2>
+      </div>
+      <p class="clients-note">A diverse mix of global and regional brands across beauty, FMCG, tech, F&B, insurance, and travel — each with their own audience, voice, and challenge.</p>
+    </div>
+  </div>
+  <div class="marquee-wrap r">
+    <div class="marquee-track">
+      <div class="client-tile">Huggies</div>
+      <div class="client-tile">Nestlé</div>
+      <div class="client-tile">Milo</div>
+      <div class="client-tile">HP</div>
+      <div class="client-tile">Shell</div>
+      <div class="client-tile">Bioré</div>
+      <div class="client-tile">Similac</div>
+      <div class="client-tile">Prudential</div>
+      <div class="client-tile">Singapore Tourism Board</div>
+      <div class="client-tile">Booking.com</div>
+      <div class="client-tile">SABECO</div>
+      <div class="client-tile">Centrum</div>
+      <div class="client-tile">Envy</div>
+      <!-- duplicate for seamless loop -->
+      <div class="client-tile">Huggies</div>
+      <div class="client-tile">Nestlé</div>
+      <div class="client-tile">Milo</div>
+      <div class="client-tile">HP</div>
+      <div class="client-tile">Shell</div>
+      <div class="client-tile">Bioré</div>
+      <div class="client-tile">Similac</div>
+      <div class="client-tile">Prudential</div>
+      <div class="client-tile">Singapore Tourism Board</div>
+      <div class="client-tile">Booking.com</div>
+      <div class="client-tile">SABECO</div>
+      <div class="client-tile">Centrum</div>
+      <div class="client-tile">Envy</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ EDUCATION ══════════════════════════════════════════════════════════ -->
+<section id="education">
+  <div class="wrap">
+    <span class="eyebrow r">05 — Education & Recognition</span>
+    <div class="edu-layout r d1">
+      <div class="edu-card">
+        <div class="edu-degree">Bachelor of Marketing</div>
+        <div class="edu-school">University of Economics HCMC (UEH)</div>
+        <div class="edu-year">Graduated 2023</div>
+        <div class="edu-desc">Marketing foundations in consumer behaviour, communications strategy, and brand management — the academic grounding for a career in social and influencer marketing.</div>
+      </div>
+      <div class="edu-card dark">
+        <div class="edu-degree">FY25 H1 Q Award</div>
+        <div class="edu-school">Edelman Vietnam</div>
+        <div class="edu-year">Employee of the Quarter · 2025</div>
+        <div class="edu-desc">Recognised for outstanding performance and contribution to client deliverables during the first half of FY2025 — the highest internal recognition at Edelman Vietnam.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CONTACT ════════════════════════════════════════════════════════════ -->
+<section id="contact">
+  <div class="wrap">
+    <span class="eyebrow r" style="display:block;text-align:center">06 — Let's Talk</span>
+    <h2 class="contact-super r d1">Open to<br><em>new roles</em></h2>
+    <p class="contact-sub r d2">Looking for a Social or Influencer Marketing position where 4+ years of real campaign execution meets the right brand. In-house or agency — let's see if we fit.</p>
+    <div class="cta-row r d3">
+      <a href="mailto:tbui16077@gmail.com" class="btn btn-fill">✉ Email Me</a>
+      <a href="https://linkedin.com/in/trang-bui-thu0310" target="_blank" class="btn btn-ghost">LinkedIn Profile ↗</a>
+      <a href="tel:+84386376479" class="btn btn-ghost">📞 Call</a>
+    </div>
+    <div class="contact-info-row r d4">
+      <div class="ci">📍 Ho Chi Minh City, VN</div>
+      <div class="ci">📞 <a href="tel:+84386376479">(+84) 38 637 6479</a></div>
+      <div class="ci">✉ <a href="mailto:tbui16077@gmail.com">tbui16077@gmail.com</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 Bui Thu Trang</p>
+  <p>Built for beauty, made with intention · <a href="https://linkedin.com/in/trang-bui-thu0310" target="_blank">LinkedIn</a></p>
+</footer>
+
+<script>
+// ── Cursor
+const cursor = document.getElementById('cursor');
+const ring   = document.getElementById('cursor-ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{
+  mx=e.clientX;my=e.clientY;
+  cursor.style.left=mx+'px';cursor.style.top=my+'px';
+});
+(function animRing(){
+  rx+=(mx-rx)*.12;ry+=(my-ry)*.12;
+  ring.style.left=rx+'px';ring.style.top=ry+'px';
+  requestAnimationFrame(animRing);
+})();
+
+// ── Nav sticky
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>nav.classList.toggle('sticky',scrollY>40));
+
+// ── Scroll reveal
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach((e,i)=>{
+    if(e.isIntersecting){
+      // stagger siblings
+      const siblings=[...e.target.parentElement.querySelectorAll('.r:not(.on)')];
+      const idx=siblings.indexOf(e.target);
+      setTimeout(()=>e.target.classList.add('on'),idx*60);
+      obs.unobserve(e.target);
+    }
+  });
+},{threshold:0.08});
+document.querySelectorAll('.r').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>
